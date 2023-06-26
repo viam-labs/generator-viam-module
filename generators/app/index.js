@@ -9,6 +9,13 @@ module.exports = class extends Generator {
       this.nm = this.appname
       this.nm = this.nm.replace(/\s+/g, '_')
 
+      this.option('current_dir', {
+        type: Boolean,
+        required: true,
+        defaults: true,
+        desc: 'Use current directory',
+      });
+
       this.option('name', {
         type: String,
         required: true,
@@ -40,10 +47,23 @@ module.exports = class extends Generator {
         required: true,
         desc: 'API triplet',
       });
+
+      this.option('existing_api', {
+        type: Boolean,
+        required: true,
+        default: true,
+        desc: 'API is a new API',
+      });
     }
 
     async prompting() {
         this.answers = await this.prompt([
+          {
+            type: "confirm",
+            name: "current_dir",
+            message: "Create module structure within current directory?  If no, will create a new directory with current directory matching the module name you select",
+            default: this.options.current_dir
+          },
             {
               type: "input",
               name: "name",
@@ -71,18 +91,52 @@ module.exports = class extends Generator {
             {
               type: "input",
               name: "api",
-              message: "The API triplet this module uses (for example: rdk:component:motor)",
+              message: "The API triplet this module uses (for example: rdk:components:motor)",
               default: this.options.api
             },
             {
               type: "confirm",
-              name: "new_api",
-              message: "Is this an existing API?"
+              name: "existing_api",
+              message: "Is this an existing API?",
+              default: this.options.existing_api
             }
           ]);
 
           this.log("Will create module scaffolding for module:", this.answers.name);
           this.log("API:", this.answers.api)
           this.log("Model:" + this.answers.ns + ":" + this.answers.family + ":" + this.answers.name)
+    }
+
+    writing() {
+      let dest_prefix = this.answers.current_dir ? '.' : './' + this.answers.name
+      let api_name = (this.answers.api.split(':'))[2]
+      api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
+
+      if (this.answers.language == 'python') {
+        let api = this.answers.api.replace(/:/g, '.')
+        api = api.replace('rdk', 'viam')
+
+        this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/requirements.txt'),
+          this.destinationPath(dest_prefix + '/requirements.txt'),
+          {}
+        );
+        this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/run.sh'),
+          this.destinationPath(dest_prefix + '/run.sh'),
+          {}
+        );
+        this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/src/__init__.py'),
+          this.destinationPath(dest_prefix + '/src/__init__.py'),
+          { name: this.answers.name, api: api, api_name: api_name }
+        );
+        this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/src/main.py'),
+          this.destinationPath(dest_prefix + '/src/main.py'),
+          { name: this.answers.name, api: api, api_name: api_name, api_initial: this.answers.api,
+            namespace: this.answers.ns, family: this.answers.family }
+        );
+      }
     }
   };
