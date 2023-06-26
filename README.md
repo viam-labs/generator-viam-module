@@ -1,6 +1,6 @@
 # generator-viam-module
 
-Generate Viam module scaffolding using Yeoman.
+Generate [Viam](https://docs.viam.com) [module]((https://docs.viam.com/extend/modular-resources/)) scaffolding using [Yeoman](https://yeoman.io/).
 
 ## Current limitations
 
