@@ -1,1 +1,1 @@
-# generator-viam-resource
+# generator-viam-module
