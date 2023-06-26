@@ -1,0 +1,27 @@
+{
+  "name": "generator-viam-module",
+  "version": "1.0.0",
+  "description": "Generate Viam module scaffolding using Yeoman",
+  "files": [
+    "generators"
+  ],
+  "main": "generators/app/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viam-labs/generator-viam-module.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "viam"
+  ],
+  "author": "Matt Vella",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/viam-labs/generator-viam-module/issues"
+  },
+  "homepage": "https://github.com/viam-labs/generator-viam-module#readme",
+  "dependencies": {
+    "yeoman-generator": "^5.9.0"
+  }
+}
