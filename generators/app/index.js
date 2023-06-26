@@ -20,7 +20,7 @@ module.exports = class extends Generator {
         type: String,
         required: true,
         defaults: this.nm,
-        desc: 'Module name',
+        desc: 'Model name',
       });
 
       this.option('ns', {
@@ -67,7 +67,7 @@ module.exports = class extends Generator {
             {
               type: "input",
               name: "name",
-              message: "Your module name - will also be used for model name in the model triplet",
+              message: "Your model name - used for model name in the model triplet",
               default: this.options.name
             },
             {
@@ -110,9 +110,11 @@ module.exports = class extends Generator {
     writing() {
       let dest_prefix = this.answers.current_dir ? '.' : './' + this.answers.name
       let api_name = (this.answers.api.split(':'))[2]
+      let api_name_lower = api_name
       api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
 
       if (this.answers.language == 'python') {
+        // in the python SDK, api triplet looks like viam.resourcetype.model instead of sdk:resourcetype:model
         let api = this.answers.api.replace(/:/g, '.')
         api = api.replace('rdk', 'viam')
 
@@ -127,15 +129,37 @@ module.exports = class extends Generator {
           {}
         );
         this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/src/main.py'),
+          this.destinationPath(dest_prefix + '/src/main.py'),
+          { name: this.answers.name, api: api, api_name: api_name }
+        );
+
+        let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
+
+        this.fs.copyTpl(
           this.templatePath(this.answers.language + '/src/__init__.py'),
-          this.destinationPath(dest_prefix + '/src/__init__.py'),
+          this.destinationPath(dest_prefix + `/src/${service_dir}__init__.py`),
           { name: this.answers.name, api: api, api_name: api_name }
         );
         this.fs.copyTpl(
-          this.templatePath(this.answers.language + '/src/main.py'),
-          this.destinationPath(dest_prefix + '/src/main.py'),
+          this.templatePath(this.answers.language + '/src/module.py'),
+          this.destinationPath(dest_prefix + '/src/'+ service_dir + this.answers.name + '.py'),
           { name: this.answers.name, api: api, api_name: api_name, api_initial: this.answers.api,
             namespace: this.answers.ns, family: this.answers.family }
+        );
+
+        if (!this.answers.existing_api) {
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/src/proto/module.proto'),
+            this.destinationPath(dest_prefix + '/src/proto/'+ api_name_lower + '.proto'),
+            { name: this.answers.name, api: api, api_name: api_name, api_name_lower: api_name_lower }
+          );
+        }
+
+        this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/src/api.py'),
+          this.destinationPath(dest_prefix + '/src/'+ service_dir + 'api.py'),
+          { name: this.answers.name, api: api, api_name: api_name, namespace: this.answers.ns, api_name_lower: api_name_lower }
         );
       }
     }

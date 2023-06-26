@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package <%= api %>.v1;
+
+import "google/api/annotations.proto";
+
+service <%= api_name %>Service {
+  // sample 'Echo' method - replace this with the methods your API needs, see https://protobuf.dev/programming-guides/proto3/
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/acme/api/v1/service/<%= api_name_lower %>/{name}/echo"
+    };
+  }
+}
+
+message EchoRequest {
+  string name = 1;
+  string text = 2;
+}
+
+message EchoResponse {
+  string text = 1;
+}

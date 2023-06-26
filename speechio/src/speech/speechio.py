@@ -7,7 +7,7 @@ from viam.proto.common import ResourceName, Vector3
 from viam.resource.base import ResourceBase
 from viam.resource.types import Model, ModelFamily
 
-from <%= api %> import <%= api_name %>
+from viamlabs.service.speech import Speech
 from viam.logging import getLogger
 
 import time
@@ -15,8 +15,8 @@ import asyncio
 
 LOGGER = getLogger(__name__)
 
-class <%= name %>(Sensor, Reconfigurable):
-    MODEL: ClassVar[Model] = Model(ModelFamily("<%= namespace %>", "<%= family %>"), "<%= name %>")
+class speechio(Sensor, Reconfigurable):
+    MODEL: ClassVar[Model] = Model(ModelFamily("viamlabs", "speech"), "speechio")
     
     # create any class parameters here, 'some_pin' is used as an example (change/add as needed)
     some_pin: int
@@ -43,7 +43,7 @@ class <%= name %>(Sensor, Reconfigurable):
         self.some_pin = int(config.attributes.fields["some_pin"].number_value)
         return
 
-    """ Implement the methods the Viam RDK defines for the <%= api_name %> API (<%= api_initial %>) """
+    """ Implement the methods the Viam RDK defines for the Speech API (viamlabs:service:speech) """
 
     async def get_readings(self, extra: Optional[Dict[str, Any]] = None, **kwargs):
         # add logic to generate readings here
