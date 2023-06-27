@@ -2,6 +2,8 @@
 
 Generate [Viam](https://docs.viam.com) [module]((https://docs.viam.com/extend/modular-resources/)) scaffolding using [Yeoman](https://yeoman.io/).
 
+![Example screen recording of usage](./generator-viam-module.gif)
+
 ## Current limitations
 
 - This generator currently does not generate stub methods for existing APIs, you will need to create them yourself based on the [proto](https://github.com/viamrobotics/api/tree/main/proto/viam).
