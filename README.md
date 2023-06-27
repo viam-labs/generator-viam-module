@@ -11,18 +11,13 @@ Generate [Viam](https://docs.viam.com) [module]((https://docs.viam.com/extend/mo
 
 ## Usage
 
-First, install node and npm if you have not already.
-
-On Mac:
-
-``` bash
-brew install node
-```
-
-And on most Linux distributions:
+First, install node (>=16) and npm if you have not already.
+It is usually best to use nvm:
 
 ``` bash
-apt install npm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+nvm install 16
+nvm use 16
 ```
 
 Now install Yeoman:

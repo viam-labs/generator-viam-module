@@ -154,13 +154,12 @@ module.exports = class extends Generator {
             this.destinationPath(dest_prefix + '/src/proto/'+ api_name_lower + '.proto'),
             { name: this.answers.name, api: api, api_name: api_name, api_name_lower: api_name_lower }
           );
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/src/api.py'),
+            this.destinationPath(dest_prefix + '/src/'+ service_dir + 'api.py'),
+            { name: this.answers.name, api: api, api_name: api_name, namespace: this.answers.ns, api_name_lower: api_name_lower }
+          );
         }
-
-        this.fs.copyTpl(
-          this.templatePath(this.answers.language + '/src/api.py'),
-          this.destinationPath(dest_prefix + '/src/'+ service_dir + 'api.py'),
-          { name: this.answers.name, api: api, api_name: api_name, namespace: this.answers.ns, api_name_lower: api_name_lower }
-        );
       }
     }
   };
