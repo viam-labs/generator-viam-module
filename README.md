@@ -34,7 +34,7 @@ npm install -g yo
 Then, install the Viam module generator:
 
 ``` bash
-npm install -g generator-webapp
+npm install -g generator-viam-module
 ```
 
 Now, go to the directory where you want to start creating your Viam module and run:
