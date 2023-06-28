@@ -102,9 +102,9 @@ module.exports = class extends Generator {
             }
           ]);
 
-          this.log("Will create module scaffolding for module:", this.answers.name);
-          this.log("API:", this.answers.api)
-          this.log("Model:" + this.answers.ns + ":" + this.answers.family + ":" + this.answers.name)
+          this.log("Will create module scaffolding for module - ", this.answers.name);
+          this.log("API - ", this.answers.api)
+          this.log("Model - " + this.answers.ns + ":" + this.answers.family + ":" + this.answers.name)
     }
 
     writing() {
