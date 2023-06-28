@@ -1,0 +1,3 @@
+[submodule "viam-python-sdk"]
+	path = viam-python-sdk
+	url = https://github.com/viamrobotics/viam-python-sdk.git
