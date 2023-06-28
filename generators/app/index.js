@@ -112,54 +112,63 @@ module.exports = class extends Generator {
       let api_name = (this.answers.api.split(':'))[2]
       let api_name_lower = api_name
       api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
-
+      let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
+      let template_params = { name: this.answers.name, api: this.answers.api, api_name: api_name, namespace: this.answers.ns, api_name_lower: api_name_lower, 
+          api_initial: this.answers.api, namespace: this.answers.ns, family: this.answers.family, stub_code: '# methods go here' }
+      
       if (this.answers.language == 'python') {
         // in the python SDK, api triplet looks like viam.resourcetype.model instead of sdk:resourcetype:model
         let api = this.answers.api.replace(/:/g, '.')
         api = api.replace('rdk', 'viam')
+        template_params.api = api
 
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/requirements.txt'),
           this.destinationPath(dest_prefix + '/requirements.txt'),
-          {}
+          template_params
         );
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/run.sh'),
           this.destinationPath(dest_prefix + '/run.sh'),
-          {}
+          template_params
         );
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/src/main.py'),
           this.destinationPath(dest_prefix + '/src/main.py'),
-          { name: this.answers.name, api: api, api_name: api_name }
+          template_params
         );
-
-        let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
 
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/src/__init__.py'),
           this.destinationPath(dest_prefix + `/src/${service_dir}__init__.py`),
-          { name: this.answers.name, api: api, api_name: api_name }
-        );
-        this.fs.copyTpl(
-          this.templatePath(this.answers.language + '/src/module.py'),
-          this.destinationPath(dest_prefix + '/src/'+ service_dir + this.answers.name + '.py'),
-          { name: this.answers.name, api: api, api_name: api_name, api_initial: this.answers.api,
-            namespace: this.answers.ns, family: this.answers.family }
+          template_params
         );
 
         if (!this.answers.existing_api) {
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/src/proto/module.proto'),
             this.destinationPath(dest_prefix + '/src/proto/'+ api_name_lower + '.proto'),
-            { name: this.answers.name, api: api, api_name: api_name, api_name_lower: api_name_lower }
+            template_params
           );
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/src/api.py'),
             this.destinationPath(dest_prefix + '/src/'+ service_dir + 'api.py'),
-            { name: this.answers.name, api: api, api_name: api_name, namespace: this.answers.ns, api_name_lower: api_name_lower }
+            template_params
           );
+        } else {
+          // read in stub methods from SDK
+          let stub_path = process.cwd() + '/viam-python-sdk/src/' + api.replace(/\./g, '/') + `/${api_name_lower}.py`
+          let stub_code = this.fs.read(stub_path)
+          stub_code = stub_code.replace(/[\s\S]+?@abc.abstractmethod/m, '')
+          stub_code = stub_code.replace(/@abc.abstractmethod/g, '')
+          template_params.stub_code = stub_code
         }
+
+        this.fs.copyTpl(
+          this.templatePath(this.answers.language + '/src/module.py'),
+          this.destinationPath(dest_prefix + '/src/'+ service_dir + this.answers.name + '.py'),
+          template_params
+        );
       }
     }
   };

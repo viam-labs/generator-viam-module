@@ -45,8 +45,4 @@ class <%= name %>(Sensor, Reconfigurable):
 
     """ Implement the methods the Viam RDK defines for the <%= api_name %> API (<%= api_initial %>) """
 
-    async def get_readings(self, extra: Optional[Dict[str, Any]] = None, **kwargs):
-        # add logic to generate readings here
-
-        # return readings as a dict
-        return {"hello": "world"}
+    <%- stub_code %>

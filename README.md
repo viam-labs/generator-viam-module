@@ -6,7 +6,6 @@ Generate [Viam](https://docs.viam.com) [module]((https://docs.viam.com/extend/mo
 
 ## Current limitations
 
-- This generator currently does not generate stub methods for existing APIs, you will need to create them yourself based on the [proto](https://github.com/viamrobotics/api/tree/main/proto/viam).
 - Only Python module generation is currently supported.
 - Module generation for existing APIs works well, module generation for resources defining new APIs is not complete.
 - The generator currently only supports generation of modules that expose a single modular resource. These modules can be manually extended.
