@@ -67,19 +67,19 @@ module.exports = class extends Generator {
             {
               type: "input",
               name: "name",
-              message: "Your model name - used for model name in the model triplet",
+              message: "Your model name - used for model name in the model triplet namespace:family:<modelname>",
               default: this.options.name
             },
             {
               type: "input",
               name: "ns",
-              message: "Your module namespace for the model triplet namespace:family:name",
+              message: "Your module namespace for the model triplet <namespace>:family:modelname",
               default: this.options.ns
             },
             {
               type: "input",
               name: "family",
-              message: "Your module family for the model triplet namespace:family:name",
+              message: "Your module family for the model triplet namespace:<family>:modelname",
               default: this.options.family
             },
             {
@@ -91,7 +91,7 @@ module.exports = class extends Generator {
             {
               type: "input",
               name: "api",
-              message: "The API triplet this module uses (for example: rdk:components:motor)",
+              message: "The API triplet this module uses (for example: rdk:components:motor). Expectation is that the second element is 'components' or 'services'.",
               default: this.options.api
             },
             {
@@ -109,12 +109,14 @@ module.exports = class extends Generator {
 
     writing() {
       let dest_prefix = this.answers.current_dir ? '.' : './' + this.answers.name
+      let api_family = (this.answers.api.split(':'))[1]
       let api_name = (this.answers.api.split(':'))[2]
       let api_name_lower = api_name
       api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
       let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
-      let template_params = { name: this.answers.name, api: this.answers.api, api_name: api_name, namespace: this.answers.ns, api_name_lower: api_name_lower, 
-          api_initial: this.answers.api, namespace: this.answers.ns, family: this.answers.family, stub_code: '# methods go here' }
+      let template_params = { name: this.answers.name, api: this.answers.api, api_family: api_family, api_name: api_name, 
+          api_name_lower: api_name_lower, api_initial: this.answers.api,
+          namespace: this.answers.ns, family: this.answers.family, stub_code: '# methods go here' }
       
       if (this.answers.language == 'python') {
         // in the python SDK, api triplet looks like viam.resourcetype.model instead of sdk:resourcetype:model

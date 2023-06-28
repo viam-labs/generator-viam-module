@@ -7,7 +7,6 @@ Generate [Viam](https://docs.viam.com) [module]((https://docs.viam.com/extend/mo
 ## Current limitations
 
 - Only Python module generation is currently supported.
-- Module generation for existing APIs works well, module generation for resources defining new APIs is not complete.
 - The generator currently only supports generation of modules that expose a single modular resource. These modules can be manually extended.
 
 ## Usage
