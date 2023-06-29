@@ -39,5 +39,5 @@ yo viam-module
 ```
 
 You will be interactively prompted and your module scaffolding will be created.
-Then you will add your custom logic, and confugure your module for use with your Viam robots.
+Then you will add your custom logic, and configure your module for use with your Viam robots.
 To read more about Viam modules and modular resources, [read the docs](https://docs.viam.com/extend/modular-resources/).
