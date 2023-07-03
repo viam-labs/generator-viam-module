@@ -1,4 +1,5 @@
 var Generator = require('yeoman-generator');
+const path = require('node:path'); 
 
 module.exports = class extends Generator {
     // The name `constructor` is important here
@@ -159,7 +160,7 @@ module.exports = class extends Generator {
           );
         } else {
           // read in stub methods from Viam SDK
-          let stub_path = __dirname + '/../../viam-python-sdk/src/' + api.replace(/\./g, '/') + `/${api_name_lower}.py`
+          let stub_path = path.join(__dirname, '/../../viam-python-sdk/src/', api.replace(/\./g, '/'),  `/${api_name_lower}.py`)
           let stub_code = this.fs.read(stub_path)
           stub_code = stub_code.replace(/[\s\S]+?@abc.abstractmethod/m, '')
           stub_code = stub_code.replace(/@abc.abstractmethod/g, '')
