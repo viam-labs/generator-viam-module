@@ -158,8 +158,8 @@ module.exports = class extends Generator {
             template_params
           );
         } else {
-          // read in stub methods from SDK
-          let stub_path = process.cwd() + '/viam-python-sdk/src/' + api.replace(/\./g, '/') + `/${api_name_lower}.py`
+          // read in stub methods from Viam SDK
+          let stub_path = __dirname + '/../../viam-python-sdk/src/' + api.replace(/\./g, '/') + `/${api_name_lower}.py`
           let stub_code = this.fs.read(stub_path)
           stub_code = stub_code.replace(/[\s\S]+?@abc.abstractmethod/m, '')
           stub_code = stub_code.replace(/@abc.abstractmethod/g, '')

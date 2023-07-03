@@ -15,7 +15,7 @@ import asyncio
 
 LOGGER = getLogger(__name__)
 
-class <%= name %>(Sensor, Reconfigurable):
+class <%= name %>(<%= api_name %>, Reconfigurable):
     MODEL: ClassVar[Model] = Model(ModelFamily("<%= namespace %>", "<%= family %>"), "<%= name %>")
     
     # create any class parameters here, 'some_pin' is used as an example (change/add as needed)
