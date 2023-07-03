@@ -1,12 +1,14 @@
 {
   "name": "generator-viam-module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generate Viam module scaffolding using Yeoman",
   "files": [
     "generators"
   ],
   "main": "generators/app/index.js",
-  "scripts": {},
+  "scripts": {
+    "preinstall": "git init && git submodule add -f https://github.com/viamrobotics/viam-python-sdk.git viam-python-sdk"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/viam-labs/generator-viam-module.git"
