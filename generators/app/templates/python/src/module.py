@@ -1,4 +1,4 @@
-from typing import ClassVar, Mapping, Sequence, Any, Dict, Optional, cast
+from typing import ClassVar, Mapping, Sequence, Any, Dict, Optional, Tuple, Final, List, cast
 from typing_extensions import Self
 
 from viam.module.types import Reconfigurable
