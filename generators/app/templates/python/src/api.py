@@ -37,9 +37,8 @@ from ..proto.<%= api_name_lower %>_pb2 import EchoRequest, EchoResponse
 
 
 class <%= api_name %>(<%- api_family == 'component' ? 'Component' : 'Service'%>Base):
-    """Example service to use with the example module"""
 
-    SUBTYPE: Final = Subtype("<%= namespace %>", RESOURCE_TYPE_SERVICE, "<%= api_name_lower %>")
+    SUBTYPE: Final = Subtype("<%= namespace %>", RESOURCE_TYPE_<%- api_family == 'component' ? 'COMPONENT' : 'SERVICE'%>, "<%= api_name_lower %>")
 
     # update with actual API methods
     @abc.abstractmethod
@@ -47,7 +46,6 @@ class <%= api_name %>(<%- api_family == 'component' ? 'Component' : 'Service'%>B
         ...
 
 class <%= api_name %>RPCService(<%= api_name %>ServiceBase, ResourceRPCServiceBase):
-    """Example gRPC service for the Speech service"""
 
     RESOURCE_TYPE = <%= api_name %>Service
 
@@ -61,7 +59,6 @@ class <%= api_name %>RPCService(<%= api_name %>ServiceBase, ResourceRPCServiceBa
         await stream.send_message(EchoResponse(text=resp))
 
 class <%= api_name %>Client(<%= api_name %>Service):
-    """Example gRPC client for the Speech Service"""
 
     def __init__(self, name: str, channel: Channel) -> None:
         self.channel = channel
