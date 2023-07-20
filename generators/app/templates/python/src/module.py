@@ -1,6 +1,6 @@
 from typing import ClassVar, Mapping, Sequence, Any, Dict, Optional, Tuple, Final, List, cast
 from typing_extensions import Self
-
+<%- additional_imports %>
 from viam.module.types import Reconfigurable
 from viam.proto.app.robot import ComponentConfig
 from viam.proto.common import ResourceName, Vector3
@@ -16,6 +16,8 @@ import asyncio
 LOGGER = getLogger(__name__)
 
 class <%= name %>(<%= api_name %>, Reconfigurable):
+    <%- stub_class_pre %>
+
     MODEL: ClassVar[Model] = Model(ModelFamily("<%= namespace %>", "<%= family %>"), "<%= name %>")
     
     # create any class parameters here, 'some_pin' is used as an example (change/add as needed)

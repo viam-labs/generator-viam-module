@@ -67,21 +67,9 @@ module.exports = class extends Generator {
           },
             {
               type: "input",
-              name: "name",
-              message: "Your model name - used for model name in the model triplet namespace:family:<modelname>",
-              default: this.options.name
-            },
-            {
-              type: "input",
-              name: "ns",
-              message: "Your module namespace for the model triplet <namespace>:family:modelname",
-              default: this.options.ns
-            },
-            {
-              type: "input",
-              name: "family",
-              message: "Your module family for the model triplet namespace:<family>:modelname",
-              default: this.options.family
+              name: "model",
+              message: "Your model triplet in the format namespace:family:modelname",
+              default: this.options.model
             },
             {
                 type: "input",
@@ -92,7 +80,7 @@ module.exports = class extends Generator {
             {
               type: "input",
               name: "api",
-              message: "The API triplet this module uses (for example: rdk:components:motor). Expectation is that the second element is 'components' or 'services'.",
+              message: "The API triplet this module uses (for example: rdk:component:motor). Expectation is that the second element is 'component' or 'service'.",
               default: this.options.api
             },
             {
@@ -103,26 +91,28 @@ module.exports = class extends Generator {
             }
           ]);
 
-          this.log("Will create module scaffolding for module - ", this.answers.name);
+          this.log("Will create module scaffolding for module - ",  (this.answers.model.split(':'))[2]);
           this.log("API - ", this.answers.api)
-          this.log("Model - " + this.answers.ns + ":" + this.answers.family + ":" + this.answers.name)
+          this.log("Model - " + this.answers.model)
     }
 
     writing() {
-      let dest_prefix = this.answers.current_dir ? '.' : './' + this.answers.name
+      let dest_prefix = this.answers.current_dir ? '.' : './' + (this.answers.model.split(':'))[2]
       let api_family = (this.answers.api.split(':'))[1]
       let api_name = (this.answers.api.split(':'))[2]
       let api_name_lower = api_name
       api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
       let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
-      let template_params = { name: this.answers.name, api: this.answers.api, api_family: api_family, api_name: api_name, 
+      let template_params = { name:  (this.answers.model.split(':'))[2], api: this.answers.api, api_family: api_family, api_name: api_name, 
           api_name_lower: api_name_lower, api_initial: this.answers.api,
-          namespace: this.answers.ns, family: this.answers.family, stub_code: '# methods go here' }
+          namespace:  (this.answers.model.split(':'))[0], family: (this.answers.model.split(':'))[1], stub_code: '# methods go here' }
       
       if (this.answers.language == 'python') {
-        // in the python SDK, api triplet looks like viam.resourcetype.model instead of sdk:resourcetype:model
+        // in the python SDK, api triplet looks like viam.[components|services].model instead of sdk:[component|service]:model
         let api = this.answers.api.replace(/:/g, '.')
         api = api.replace('rdk', 'viam')
+        api = api.replace('component', 'components')
+        api = api.replace('service', 'services')
         template_params.api = api
 
         this.fs.copyTpl(
@@ -149,6 +139,21 @@ module.exports = class extends Generator {
 
         if (!this.answers.existing_api) {
           this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/buf.gen.yaml'),
+            this.destinationPath(dest_prefix + '/buf.gen.yaml'),
+            template_params
+          );
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/buf.lock'),
+            this.destinationPath(dest_prefix + '/buf.lock'),
+            template_params
+          );
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/buf.yaml'),
+            this.destinationPath(dest_prefix + '/buf.yaml'),
+            template_params
+          );
+          this.fs.copyTpl(
             this.templatePath(this.answers.language + '/src/proto/module.proto'),
             this.destinationPath(dest_prefix + '/src/proto/'+ api_name_lower + '.proto'),
             template_params
@@ -162,6 +167,22 @@ module.exports = class extends Generator {
           // read in stub methods from Viam SDK
           let stub_path = path.join(__dirname, '/../../viam-python-sdk/src/', api.replace(/\./g, '/'),  `/${api_name_lower}.py`)
           let stub_code = this.fs.read(stub_path)
+
+          let additional_imports = stub_code.replace(/class[\s\S]+/m,'')
+          additional_imports = additional_imports.replace(/import abc/, '')
+          additional_imports = additional_imports.replace(/from viam.resource.types import RESOURCE_NAMESPACE_RDK, RESOURCE_TYPE_COMPONENT, Subtype/, '')
+          additional_imports = additional_imports.replace(/from ..component_base[\s\S]+?\n/,'')
+          additional_imports = additional_imports.replace(/from . import/,`from ${api} import`)
+          template_params.additional_imports = additional_imports
+
+          let stub_class_pre = stub_code.replace(/[\s\S]+?class[\s\S]+?:/m, '')
+          stub_class_pre = stub_class_pre.replace(/@abc.abstractmethod[\s\S]+/m,'')
+          stub_class_pre = stub_class_pre.replace(/SUBTYPE[\s\S]+?\)/m,'')
+          stub_class_pre = stub_class_pre.replace(/This acts as an abstract[\s\S]+?"""/m,'"""')
+          // replace multiple linebreaks with one
+          stub_class_pre = stub_class_pre.replace(/\n\s*\n/g, '\n');
+          template_params.stub_class_pre = stub_class_pre
+
           stub_code = stub_code.replace(/[\s\S]+?@abc.abstractmethod/m, '')
           stub_code = stub_code.replace(/@abc.abstractmethod/g, '')
           template_params.stub_code = stub_code
@@ -169,7 +190,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/src/module.py'),
-          this.destinationPath(dest_prefix + '/src/'+ service_dir + this.answers.name + '.py'),
+          this.destinationPath(dest_prefix + '/src/'+ service_dir +  (this.answers.model.split(':'))[2] + '.py'),
           template_params
         );
       }
