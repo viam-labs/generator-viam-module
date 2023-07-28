@@ -103,9 +103,12 @@ module.exports = class extends Generator {
       let api_name_lower = api_name
       api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
       let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
-      let template_params = { name:  (this.answers.model.split(':'))[2], api: this.answers.api, api_family: api_family, api_name: api_name, 
-          api_name_lower: api_name_lower, api_initial: this.answers.api,
-          namespace:  (this.answers.model.split(':'))[0], family: (this.answers.model.split(':'))[1], stub_code: '# methods go here' }
+      let template_params = {
+        name: (this.answers.model.split(':'))[2], api: this.answers.api, api_family: api_family, api_name: api_name,
+        api_name_lower: api_name_lower, api_initial: this.answers.api,
+        namespace: (this.answers.model.split(':'))[0], family: (this.answers.model.split(':'))[1], 
+        stub_code: '# methods go here', additional_imports: "", stub_class_pre: ""
+      }
       
       if (this.answers.language == 'python') {
         // in the python SDK, api triplet looks like viam.[components|services].model instead of sdk:[component|service]:model
