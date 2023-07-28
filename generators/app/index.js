@@ -105,7 +105,7 @@ module.exports = class extends Generator {
       let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
       let template_params = {
         name: (this.answers.model.split(':'))[2], api: this.answers.api, api_family: api_family, api_name: api_name,
-        api_name_lower: api_name_lower, api_initial: this.answers.api,
+        api_name_lower: api_name_lower, api_initial: this.answers.api, api_source: this.answers.api,
         namespace: (this.answers.model.split(':'))[0], family: (this.answers.model.split(':'))[1], 
         stub_code: '# methods go here', additional_imports: "", stub_class_pre: ""
       }
@@ -141,6 +141,7 @@ module.exports = class extends Generator {
         );
 
         if (!this.answers.existing_api) {
+          template_params.api_source = ".api"
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/buf.gen.yaml'),
             this.destinationPath(dest_prefix + '/buf.gen.yaml'),

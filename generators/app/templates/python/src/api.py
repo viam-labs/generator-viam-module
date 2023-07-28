@@ -36,7 +36,7 @@ from ..proto.<%= api_name_lower %>_grpc import <%= api_name %>ServiceBase, <%= a
 from ..proto.<%= api_name_lower %>_pb2 import EchoRequest, EchoResponse
 
 
-class <%= api_name %>Service(<%- api_family == 'component' ? 'Component' : 'Service'%>Base):
+class <%= api_name %>(<%- api_family == 'component' ? 'Component' : 'Service'%>Base):
 
     SUBTYPE: Final = Subtype("<%= namespace %>", RESOURCE_TYPE_<%- api_family == 'component' ? 'COMPONENT' : 'SERVICE'%>, "<%= api_name_lower %>")
 
@@ -47,7 +47,7 @@ class <%= api_name %>Service(<%- api_family == 'component' ? 'Component' : 'Serv
 
 class <%= api_name %>RPCService(<%= api_name %>ServiceBase, ResourceRPCServiceBase):
 
-    RESOURCE_TYPE = <%= api_name %>Service
+    RESOURCE_TYPE = <%= api_name %>
 
     # update with actual API methods
     async def Echo(self, stream: Stream[EchoRequest, EchoResponse]) -> None:
