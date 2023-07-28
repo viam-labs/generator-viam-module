@@ -36,7 +36,7 @@ from ..proto.<%= api_name_lower %>_grpc import <%= api_name %>ServiceBase, <%= a
 from ..proto.<%= api_name_lower %>_pb2 import EchoRequest, EchoResponse
 
 
-class <%= api_name %>(<%- api_family == 'component' ? 'Component' : 'Service'%>Base):
+class <%= api_name %>Service(<%- api_family == 'component' ? 'Component' : 'Service'%>Base):
 
     SUBTYPE: Final = Subtype("<%= namespace %>", RESOURCE_TYPE_<%- api_family == 'component' ? 'COMPONENT' : 'SERVICE'%>, "<%= api_name_lower %>")
 
