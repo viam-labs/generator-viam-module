@@ -148,11 +148,6 @@ module.exports = class extends Generator {
             template_params
           );
           this.fs.copyTpl(
-            this.templatePath(this.answers.language + '/buf.lock'),
-            this.destinationPath(dest_prefix + '/buf.lock'),
-            template_params
-          );
-          this.fs.copyTpl(
             this.templatePath(this.answers.language + '/buf.yaml'),
             this.destinationPath(dest_prefix + '/buf.yaml'),
             template_params
