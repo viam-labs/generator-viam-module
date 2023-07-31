@@ -47,7 +47,7 @@ class <%= api_name %>(<%- api_family == 'component' ? 'Component' : 'Service'%>B
 
 class <%= api_name %>RPCService(<%= api_name %>ServiceBase, ResourceRPCServiceBase):
 
-    RESOURCE_TYPE = <%= api_name %>Service
+    RESOURCE_TYPE = <%= api_name %>
 
     # update with actual API methods
     async def Echo(self, stream: Stream[EchoRequest, EchoResponse]) -> None:
