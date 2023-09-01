@@ -58,7 +58,7 @@ class <%= api_name %>RPCService(<%= api_name %>ServiceBase, ResourceRPCServiceBa
         resp = await service.say(request.text)
         await stream.send_message(EchoResponse(text=resp))
 
-class <%= api_name %>Client(<%= api_name %>Service):
+class <%= api_name %>Client(<%= api_name %>):
 
     def __init__(self, name: str, channel: Channel) -> None:
         self.channel = channel
