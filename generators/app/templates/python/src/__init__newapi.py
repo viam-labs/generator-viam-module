@@ -7,5 +7,6 @@ from viam.resource.registry import Registry, ResourceCreatorRegistration, Resour
 from .api import <%= api_name %>Client, <%= api_name %>RPCService, <%= api_name %>
 from .<%= name %> import <%= name %>
 
-Registry.register_resource_creator(<%= api_name %>.SUBTYPE, <%= name %>.MODEL, ResourceCreatorRegistration(<%= name %>.new))
 Registry.register_subtype(ResourceRegistration(<%= api_name %>, <%= api_name %>RPCService, lambda name, channel: <%= api_name %>Client(name, channel)))
+
+Registry.register_resource_creator(<%= api_name %>.SUBTYPE, <%= name %>.MODEL, ResourceCreatorRegistration(<%= name %>.new))
