@@ -134,14 +134,15 @@ module.exports = class extends Generator {
           template_params
         );
 
-        this.fs.copyTpl(
-          this.templatePath(this.answers.language + '/src/__init__.py'),
-          this.destinationPath(dest_prefix + `/src/${service_dir}__init__.py`),
-          template_params
-        );
-
         if (!this.answers.existing_api) {
           template_params.api_source = ".api"
+
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/src/__init__newapi.py'),
+            this.destinationPath(dest_prefix + `/src/${service_dir}__init__.py`),
+            template_params
+          );
+
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/buf.gen.yaml'),
             this.destinationPath(dest_prefix + '/buf.gen.yaml'),
@@ -163,6 +164,12 @@ module.exports = class extends Generator {
             template_params
           );
         } else {
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/src/__init__.py'),
+            this.destinationPath(dest_prefix + `/src/${service_dir}__init__.py`),
+            template_params
+          );
+
           // read in stub methods from Viam SDK
           let stub_path = path.join(__dirname, '/../../viam-python-sdk/src/', api.replace(/\./g, '/'),  `/${api_name_lower}.py`)
           let stub_code = this.fs.read(stub_path)

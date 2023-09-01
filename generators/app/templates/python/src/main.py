@@ -1,9 +1,8 @@
 import asyncio
 import sys
 
-from <%= api %> import <%= api_name %>
 from viam.module.module import Module
-from .<%= name %> import <%= name %>
+from .<%= api_name_lower %> import <%= name %>, <%= api_name %>
 
 async def main():
     """This function creates and starts a new module, after adding all desired resources.
