@@ -205,7 +205,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/src/module.py'),
-          this.destinationPath(dest_prefix + '/src/'+ service_dir +  (this.answers.model.split(':'))[2] + '.py'),
+          this.destinationPath(dest_prefix + '/src/'+ service_dir +  name_sanitized + '.py'),
           template_params
         );
       }
