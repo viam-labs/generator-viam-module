@@ -15,7 +15,7 @@ import asyncio
 
 LOGGER = getLogger(__name__)
 
-class <%= name %>(<%= api_name %>, Reconfigurable):
+class <%= name_sanitized %>(<%= api_name %>, Reconfigurable):
     <%- stub_class_pre %>
 
     MODEL: ClassVar[Model] = Model(ModelFamily("<%= namespace %>", "<%= family %>"), "<%= name %>")

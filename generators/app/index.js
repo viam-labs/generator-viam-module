@@ -103,8 +103,10 @@ module.exports = class extends Generator {
       let api_name_lower = api_name
       api_name = api_name.charAt(0).toUpperCase() + api_name.slice(1)
       let service_dir = this.answers.existing_api ? '' : api_name_lower + '/'
+      let name = (this.answers.model.split(':'))[2]
+      let name_sanitized = name.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
       let template_params = {
-        name: (this.answers.model.split(':'))[2], api: this.answers.api, api_family: api_family, api_name: api_name,
+        name: name, name_sanitized: name_sanitized, api: this.answers.api, api_family: api_family, api_name: api_name,
         api_name_lower: api_name_lower, api_initial: this.answers.api, api_source: this.answers.api,
         namespace: (this.answers.model.split(':'))[0], family: (this.answers.model.split(':'))[1], 
         stub_code: '# methods go here', additional_imports: "", stub_class_pre: ""
@@ -128,14 +130,15 @@ module.exports = class extends Generator {
           this.destinationPath(dest_prefix + '/run.sh'),
           template_params
         );
-        this.fs.copyTpl(
-          this.templatePath(this.answers.language + '/src/main.py'),
-          this.destinationPath(dest_prefix + '/src/main.py'),
-          template_params
-        );
 
         if (!this.answers.existing_api) {
           template_params.api_source = ".api"
+
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/src/main_newapi.py'),
+            this.destinationPath(dest_prefix + '/src/main.py'),
+            template_params
+          );
 
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/src/__init__newapi.py'),
@@ -164,6 +167,12 @@ module.exports = class extends Generator {
             template_params
           );
         } else {
+          this.fs.copyTpl(
+            this.templatePath(this.answers.language + '/src/main.py'),
+            this.destinationPath(dest_prefix + '/src/main.py'),
+            template_params
+          );
+
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/src/__init__.py'),
             this.destinationPath(dest_prefix + `/src/${service_dir}__init__.py`),
