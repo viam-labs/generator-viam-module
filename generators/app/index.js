@@ -119,6 +119,7 @@ module.exports = class extends Generator {
         api = api.replace('component', 'components')
         api = api.replace('service', 'services')
         template_params.api = api
+        template_params.api_source = api
 
         this.fs.copyTpl(
           this.templatePath(this.answers.language + '/requirements.txt'),
