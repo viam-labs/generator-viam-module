@@ -1,8 +1,23 @@
+# note - after buf generate change this line in <%= api_name_lower %>_grpc.py:
+# from . import <%= api_name_lower %>_pb2
 version: v1
 plugins:
   - name: python
-    out: .
+    out: <%= api_name_lower %>_python/grpc
   - name: grpclib_python
-    out: .
+    out: <%= api_name_lower %>_python/grpc
   - name: mypy
-    out: .
+    out: <%= api_name_lower %>_python/grpc
+  - name: go
+    out: <%= api_name_lower %>_go/grpc
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: <%= api_name_lower %>_go/grpc
+    opt:
+      - paths=source_relative
+  - name: grpc-gateway
+    out: <%= api_name_lower %>_go/grpc
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true

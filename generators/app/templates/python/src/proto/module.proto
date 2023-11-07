@@ -4,6 +4,8 @@ package <%= api %>.v1;
 
 import "google/api/annotations.proto";
 
+option go_package = "./<%= api_name_lower %>-api";
+
 service <%= api_name %>Service {
   // sample 'Echo' method - replace this with the methods your API needs, see https://protobuf.dev/programming-guides/proto3/
   rpc Echo(EchoRequest) returns (EchoResponse) {
