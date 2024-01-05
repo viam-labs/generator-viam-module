@@ -5,7 +5,7 @@ With this model, you can...
 
 ## Requirements
 
-Add instructions here for any requirements.
+_Add instructions here for any requirements._
 
 ``` bash
 ```
@@ -28,7 +28,7 @@ On the new component panel, copy and paste the following attribute template into
 
 ```json
 {
-  <INSERT SAMPLE ATTRIBUTES>
+  TODO: INSERT SAMPLE ATTRIBUTES
 }
 ```
 
@@ -41,25 +41,25 @@ The following attributes are available for `<%= api_namespace %>:<%= api_name_lo
 
 | Name | Type | Inclusion | Description |
 | ---- | ---- | --------- | ----------- |
-| `` | string | **Required** |  |
-| `` | string | Optional |  |
+| `todo1` | string | **Required** |  TODO |
+| `todo2` | string | Optional |  TODO |
 
 ### Example Configuration
 
 ```json
 {
-  <INSERT SAMPLE CONFIGURATION(S)>
+  TODO: INSERT SAMPLE CONFIGURATION(S)
 }
 ```
 
 ### Next Steps
 
-Add any additional information you want them to know and direct them towards what to do next with Viam.
-For example: 
+_Add any additional information you want readers to know and direct them towards what to do next with this module._
+_For example:_ 
 
 - To test your...
 - To write code against your...
 
 ## Troubleshooting
 
-Add troubleshooting notes here.
+_Add troubleshooting notes here._
