@@ -17,7 +17,7 @@ To use this module, follow these instructions to [add a module from the Viam Reg
 ## Configure your <%= api_name_lower %>
 
 > [!NOTE]  
-> Before configuring your <%= api_name_lower %>, you must [create a robot](https://docs.viam.com/manage/fleet/robots/#add-a-new-robot).
+> Before configuring your <%= api_name_lower %>, you must [create a machine](https://docs.viam.com/manage/fleet/machines/#add-a-new-machine).
 
 Navigate to the **Config** tab of your robot’s page in [the Viam app](https://app.viam.com/).
 Click on the **Components** subtab and click **Create component**.
