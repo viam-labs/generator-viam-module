@@ -1,29 +1,65 @@
 # <%= name %> modular service
 
-*<%= name %>* is a Viam modular service that provides <%= api_name_lower %> capabilities
+This module implements the [<%= api_namespace %> <%= api_name_lower %> API](https://github.com/<%= api_namespace %>/<%= api_name_lower %>-api) in a <%= model %> model.
+With this model, you can...
 
-The model this module makes available is <%= model %>
+## Requirements
 
-## Prerequisites
-
-Add instructions here for any prerequisites.
+_Add instructions here for any requirements._
 
 ``` bash
 ```
 
-## API
+## Build and Run
 
-The <%= name %> resource implements the [<%= api_namespace %> <%= api_name_lower %> API](https://github.com/<%= api_namespace %>/<%= api_name_lower %>-api).
+To use this module, follow these instructions to [add a module from the Viam Registry](https://docs.viam.com/registry/configure/#add-a-modular-resource-from-the-viam-registry) and select the `<%= api_namespace %>:<%= api_name_lower %>:<%= model %>` model from the [`<%= model %>` module](https://app.viam.com/module/<%= api_namespace %>/<%= model %>).
 
-Please also use the API codebase to interact with a configured version of this service via Viam SDK.
+## Configure your <%= api_name_lower %>
 
-## Viam Service Configuration
+> [!NOTE]  
+> Before configuring your <%= api_name_lower %>, you must [create a machine](https://docs.viam.com/manage/fleet/machines/#add-a-new-machine).
 
-Add notes and example JSON config here.
+Navigate to the **Config** tab of your robot’s page in [the Viam app](https://app.viam.com/).
+Click on the **Components** subtab and click **Create component**.
+Select the `<%= api_name_lower %>` type, then select the `<%= model %>` model. 
+Enter a name for your <%= api_name_lower %> and click **Create**.
+
+On the new component panel, copy and paste the following attribute template into your <%= api_name_lower %>’s **Attributes** box:
 
 ```json
+{
+  TODO: INSERT SAMPLE ATTRIBUTES
+}
 ```
+
+> [!NOTE]  
+> For more information, see [Configure a Robot](https://docs.viam.com/manage/configuration/).
+
+### Attributes
+
+The following attributes are available for `<%= api_namespace %>:<%= api_name_lower %>:<%= model %>` <%= api_name_lower %>s:
+
+| Name | Type | Inclusion | Description |
+| ---- | ---- | --------- | ----------- |
+| `todo1` | string | **Required** |  TODO |
+| `todo2` | string | Optional |  TODO |
+
+### Example Configuration
+
+```json
+{
+  TODO: INSERT SAMPLE CONFIGURATION(S)
+}
+```
+
+### Next Steps
+
+_Add any additional information you want readers to know and direct them towards what to do next with this module._
+_For example:_ 
+
+- To test your...
+- To write code against your...
 
 ## Troubleshooting
 
-Add troubleshooting notes here.
+_Add troubleshooting notes here._
