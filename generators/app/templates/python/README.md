@@ -1,4 +1,4 @@
-# <%= name %> modular service
+# <%= name %> modular resource
 
 This module implements the [<%= api_namespace %> <%= api_name_lower %> API](https://github.com/<%= api_namespace %>/<%= api_name_lower %>-api) in a <%= model %> model.
 With this model, you can...
@@ -10,7 +10,7 @@ _Add instructions here for any requirements._
 ``` bash
 ```
 
-## Build and Run
+## Build and run
 
 To use this module, follow these instructions to [add a module from the Viam Registry](https://docs.viam.com/registry/configure/#add-a-modular-resource-from-the-viam-registry) and select the `<%= api_namespace %>:<%= api_name_lower %>:<%= model %>` model from the [`<%= model %>` module](https://app.viam.com/module/<%= api_namespace %>/<%= model %>).
 
@@ -44,7 +44,7 @@ The following attributes are available for `<%= api_namespace %>:<%= api_name_lo
 | `todo1` | string | **Required** |  TODO |
 | `todo2` | string | Optional |  TODO |
 
-### Example Configuration
+### Example configuration
 
 ```json
 {
@@ -52,7 +52,7 @@ The following attributes are available for `<%= api_namespace %>:<%= api_name_lo
 }
 ```
 
-### Next Steps
+### Next steps
 
 _Add any additional information you want readers to know and direct them towards what to do next with this module._
 _For example:_ 
