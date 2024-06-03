@@ -7,7 +7,7 @@ from viam.proto.common import ResourceName, Vector3
 from viam.resource.base import ResourceBase
 from viam.resource.types import Model, ModelFamily
 
-from <%= api_name_lower %>_python import <%= api_name %>
+from <%= api_source %> import <%= api_name %>
 from viam.logging import getLogger
 
 import time

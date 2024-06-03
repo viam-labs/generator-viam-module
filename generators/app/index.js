@@ -157,7 +157,7 @@ module.exports = class extends Generator {
         );
 
         if (!this.answers.existing_api) {
-          template_params.api_source = ".api"
+          template_params.api_source = api_name_lower + "_python"
 
           this.fs.copyTpl(
             this.templatePath(this.answers.language + '/requirements_api.txt'),
@@ -246,6 +246,7 @@ module.exports = class extends Generator {
           additional_imports = additional_imports.replace(/import abc/, '')
           additional_imports = additional_imports.replace(/from viam.resource.types import RESOURCE_NAMESPACE_RDK, RESOURCE_TYPE_COMPONENT, Subtype/, '')
           additional_imports = additional_imports.replace(/from ..component_base[\s\S]+?\n/,'')
+          additional_imports = additional_imports.replace(/from ..service_base import ServiceBase/,'')
           additional_imports = additional_imports.replace(/from . import/,`from ${api} import`)
           template_params.additional_imports = additional_imports
 
