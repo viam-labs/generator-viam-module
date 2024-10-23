@@ -12,8 +12,8 @@ _Add instructions here for any requirements._
 
 ## Configure your <%= model %> <%= api_name_lower %>
 
-Navigate to the [**CONFIGURE** tab](https://docs.viam.com/build/configure/) of your [machine](https://docs.viam.com/fleet/machines/) in [the Viam app](https://app.viam.com/).
-[Add <%= api_name_lower %> / <%= model %> to your machine](https://docs.viam.com/build/configure/#).
+Navigate to the **CONFIGURE** tab of your [machine](https://docs.viam.com/fleet/machines/) in the [Viam app](https://app.viam.com/).
+[Add <%= api_name_lower %> / <%= model %> to your machine](https://docs.viam.com/registry/modular-resources/#configuration).
 
 On the new <%= api_family %> panel, copy and paste the following attribute template into your <%= api_name_lower %>’s **Attributes** box:
 
