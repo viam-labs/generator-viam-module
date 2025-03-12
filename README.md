@@ -1,3 +1,7 @@
+> [!NOTE]
+> This generator is now deprecated unless you are creating an [entirely new API](https://docs.viam.com/operate/reference/advanced-modules/create-subtype/).
+> To make a module that implements an existing API with a custom model, use the [Viam CLI `viam module generate` command](https://docs.viam.com/operate/get-started/other-hardware/#write-your-module).
+
 # generator-viam-module
 
 Generate [Viam](https://docs.viam.com) [module]((https://docs.viam.com/extend/modular-resources/)) scaffolding using [Yeoman](https://yeoman.io/).
@@ -40,4 +44,4 @@ yo viam-module
 
 You will be interactively prompted and your module scaffolding will be created.
 Then you will add your custom logic, and configure your module for use with your Viam robots.
-To read more about Viam modules and modular resources, [read the docs](https://docs.viam.com/extend/modular-resources/).
+To read more about Viam modules and modular resources, [read the docs](https://docs.viam.com/operate/get-started/other-hardware/).
